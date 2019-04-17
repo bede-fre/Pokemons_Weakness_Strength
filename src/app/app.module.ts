@@ -8,6 +8,7 @@ import { PokemonDetailComponent } from './pokemon-detail/pokemon-detail.componen
 import { PokemonService } from './pokemon.service';
 import { MessageComponent } from './message/message.component';
 import { MessageService } from './message.service';
+import { AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MessageService } from './message.service';
   
   imports:      [ 
     BrowserModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
 
   bootstrap:    [
