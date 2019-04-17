@@ -9,13 +9,15 @@ import { PokemonService } from './pokemon.service';
 import { MessageComponent } from './message/message.component';
 import { MessageService } from './message.service';
 import { AppRoutingModule} from './app-routing.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PokemonsComponent,
     PokemonDetailComponent,
-    MessageComponent
+    MessageComponent,
+    DashboardComponent
   ],
   
   imports:      [ 
