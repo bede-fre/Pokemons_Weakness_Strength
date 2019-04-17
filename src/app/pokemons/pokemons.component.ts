@@ -23,4 +23,18 @@ export class PokemonsComponent implements OnInit {
     this.pokemonService.getPokemons()
       .subscribe(pokemons => this.pokemons = pokemons);
   }
+
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.pokemonService.addPokemon({ name } as Pokemon)
+      .subscribe(pokemon => {
+        this.pokemons.push(pokemon);
+      });
+  }
+
+  delete(pokemon: Pokemon): void {
+    this.pokemons = this.pokemons.filter(h => h !== pokemon);
+    this.pokemonService.deletePokemon(pokemon).subscribe();
+  }
 }

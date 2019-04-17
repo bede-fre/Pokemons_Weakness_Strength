@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule} from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { AppComponent } from './app.component';
 import { PokemonsComponent } from './pokemons/pokemons.component';
@@ -11,6 +13,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { PokemonService } from './pokemon.service';
 import { MessageService } from './message.service';
+import { InMemoryDataService } from './in-memory-data.service';
+import { PokemonSearchComponent } from './pokemon-search/pokemon-search.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +22,18 @@ import { MessageService } from './message.service';
     PokemonsComponent,
     PokemonDetailComponent,
     MessageComponent,
-    DashboardComponent
+    DashboardComponent,
+    PokemonSearchComponent
   ],
   
   imports:      [ 
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
 
   bootstrap:    [
@@ -33,7 +42,8 @@ import { MessageService } from './message.service';
 
   providers: [
     PokemonService,
-    MessageService
+    MessageService,
+    InMemoryDataService
   ]
 })
 

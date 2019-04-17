@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -13,7 +13,7 @@ import { PokemonService } from '../pokemon.service';
 })
 
 export class PokemonDetailComponent implements OnInit {
-  pokemon: Pokemon;
+  @Input() pokemon: Pokemon;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,5 +33,10 @@ export class PokemonDetailComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  save(): void {
+    this.pokemonService.updatePokemon(this.pokemon)
+      .subscribe(() => this.goBack());
   }
 }
