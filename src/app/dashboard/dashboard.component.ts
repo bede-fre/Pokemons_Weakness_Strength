@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Pokemon } from '../pokemon';
+
 import { PokemonService } from '../pokemon.service';
 
 @Component({
@@ -7,6 +9,7 @@ import { PokemonService } from '../pokemon.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+
 export class DashboardComponent implements OnInit {
   pokemons: Pokemon [] = [];
 
