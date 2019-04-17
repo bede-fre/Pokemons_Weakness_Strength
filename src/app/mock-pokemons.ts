@@ -8,6 +8,6 @@ export const POKEMONS: Pokemon[] = [
   { id: 5, name: 'Charmeleon' },
   { id: 6, name: 'Charizard' },
   { id: 7, name: 'Squirtle' },
-  { id: 8, name: 'Wartutle' },
+  { id: 8, name: 'Warturtle' },
   { id: 9, name: 'Blastoise' }
 ];

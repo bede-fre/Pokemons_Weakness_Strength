@@ -18,6 +18,6 @@ export class DashboardComponent implements OnInit {
 
   getPokemons(): void {
     this.pokemonService.getPokemons()
-      .subscribe(pokemons => this.pokemons = pokemons.slice(1, 5));
+      .subscribe(pokemons => this.pokemons = pokemons.slice(3, 6));
   }
 }
