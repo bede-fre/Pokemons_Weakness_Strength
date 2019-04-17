@@ -26,6 +26,9 @@ import { MessageService } from './message.service';
     AppComponent
  ],
 
-  providers: [PokemonService, MessageService]
+  providers: [
+    PokemonService,
+    MessageService
+  ]
 })
 export class AppModule { }
