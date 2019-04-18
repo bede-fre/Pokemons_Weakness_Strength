@@ -4,7 +4,7 @@
     <input #pokemonName />
   </label>
   <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(pokemonName.value); pokemonName.value=''">add</button>
+  <button (click)='add(pokemonName.value); pokemonName.value=null'>add</button>
 </div>
 
 <ul class='pokemons'>
@@ -13,6 +13,6 @@
       <span class='badge'>{{pokemon.id}}</span> {{pokemon.name}}
     </a>
     <button class='delete' title='delete pokemon'
-      (click)="delete(pokemon)">x</button>
+      (click)='delete(pokemon)'>x</button>
   </li>
 </ul>

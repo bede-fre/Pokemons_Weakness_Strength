@@ -5,7 +5,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Pokemon } from './pokemon';
-import { POKEMONS } from './mock-pokemons';
 
 import { MessageService } from './message.service';
 
@@ -22,13 +21,27 @@ export class PokemonService {
     private http:HttpClient,
     private messageService: MessageService) { }
 
-    /** GET pokemons from the server */
+  /** GET pokemons from the server */
   getPokemons (): Observable<Pokemon[]> {
     return this.http.get<Pokemon[]>(this.pokemonsUrl)
       .pipe(
         tap(_ => this.log('fetched pokemons')),
         catchError(this.handleError<Pokemon[]>('getPokemons', []))
     );
+  }
+
+  /** GET pokemon by id. Return `undefined` when id not found */
+  getPokemonNo404<Data>(id: number): Observable<Pokemon> {
+    const url = `${this.pokemonsUrl}/?id=${id}`;
+    return this.http.get<Pokemon[]>(url)
+      .pipe(
+        map(pokemons => pokemons[0]), // returns a {0|1} element array
+        tap(p => {
+          const outcome = p ? `fetched` : `did not find`;
+          this.log(`${outcome} pokemon id=${id}`);
+        }),
+        catchError(this.handleError<Pokemon>(`getPokemon id=${id}`))
+      );
   }
 
   /** GET pokemon by id. Will 404 if id not found */
@@ -43,7 +56,7 @@ export class PokemonService {
   /* GET pokemons whose name contains search term */
   searchPokemons(term: string): Observable<Pokemon[]> {
     if (!term.trim()) {
-      // if not search term, return empty hero array.
+      // if not search term, return empty pokemon array.
       return of([]);
     }
    return this.http.get<Pokemon[]>(`${this.pokemonsUrl}/?name=${term}`).pipe(
@@ -52,10 +65,12 @@ export class PokemonService {
     );
   }
 
+  //////// Save methods //////////
+
   /** POST: add a new pokemon to the server */
   addPokemon (pokemon: Pokemon): Observable<Pokemon> {
     return this.http.post<Pokemon>(this.pokemonsUrl, pokemon, httpOptions).pipe(
-      tap((newPokemon: Pokemon) => this.log(`added hero w/ id=${newPokemon.id}`)),
+      tap((newPokemon: Pokemon) => this.log(`added pokemon w/ id=${newPokemon.id}`)),
       catchError(this.handleError<Pokemon>('addPokemon'))
     );
   }
@@ -65,7 +80,7 @@ export class PokemonService {
     const id = typeof pokemon === 'number' ? pokemon : pokemon.id;
     const url = `${this.pokemonsUrl}/${id}`;
     return this.http.delete<Pokemon>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted hero id=${id}`)),
+      tap(_ => this.log(`deleted pokemon id=${id}`)),
       catchError(this.handleError<Pokemon>('deletePokemon'))
       );
   }

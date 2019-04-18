@@ -34,7 +34,7 @@ export class PokemonsComponent implements OnInit {
   }
 
   delete(pokemon: Pokemon): void {
-    this.pokemons = this.pokemons.filter(h => h !== pokemon);
+    this.pokemons = this.pokemons.filter(p => p !== pokemon);
     this.pokemonService.deletePokemon(pokemon).subscribe();
   }
 }
