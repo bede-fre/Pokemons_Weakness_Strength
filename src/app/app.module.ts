@@ -15,6 +15,7 @@ import { PokemonService } from './pokemon.service';
 import { MessageService } from './message.service';
 import { InMemoryDataService } from './in-memory-data.service';
 import { PokemonSearchComponent } from './pokemon-search/pokemon-search.component';
+import { PokemonDetailWeaknessComponent } from './pokemon-detail-weakness/pokemon-detail-weakness.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PokemonSearchComponent } from './pokemon-search/pokemon-search.componen
     PokemonDetailComponent,
     MessageComponent,
     DashboardComponent,
-    PokemonSearchComponent
+    PokemonSearchComponent,
+    PokemonDetailWeaknessComponent
   ],
   
   imports:      [ 

@@ -2,10 +2,12 @@
   <h2>{{pokemon.name | uppercase}} Details</h2>
   <div><span>id: </span>{{pokemon.id}}</div>
   <div>
-    <label>name:
+    <label>Name:
       <input [(ngModel)]='pokemon.name' placeholder='name'/>
     </label>
   </div>
+  <app-pokemon-detail-weakness></app-pokemon-detail-weakness>
+
   <button (click)='goBack()'>go back</button>
   <button (click)='save()'>save</button>
 </div>
