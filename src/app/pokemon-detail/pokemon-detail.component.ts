@@ -13,7 +13,7 @@ import { PokemonService } from '../pokemon.service';
 })
 
 export class PokemonDetailComponent implements OnInit {
-  @Input() pokemon: Pokemon;
+  pokemon: Pokemon;
 
   constructor(
     private route: ActivatedRoute,

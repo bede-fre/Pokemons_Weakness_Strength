@@ -18,8 +18,9 @@ export class PokemonService {
   private pokemonsUrl = 'api/pokemons'; // URL to web api
 
   constructor(
-    private http:HttpClient,
-    private messageService: MessageService) { }
+    private http: HttpClient,
+    private messageService: MessageService
+  ) { }
 
   /** GET pokemons from the server */
   getPokemons (): Observable<Pokemon[]> {
