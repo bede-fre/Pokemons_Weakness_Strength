@@ -1,8 +1,27 @@
 <h5>Weak to :</h5>
 
 <div>
-  <select>
-    <option  *ngFor='let pokemon of pokemons' [value]='pokemon.id'>{{ pokemon.name }}</option>
-  </select>
+
+  <button class='show'
+          (click)="show(bol)">Show/hide</button> 
+  <ul class='pokemonList'>
+    <li  *ngFor='let pokemon of pokemonsList' (click)='listSelectedPokemons(pokemon)'><span>{{ pokemon.id }} </span>{{ pokemon.name }}
+    </li>
+    <button class='clear'
+            (click)='clear()'>Clear selction</button>
+    <button class='delete'
+            (click)='delete()'>Delete last one</button> 
+  </ul>
+
+  <div class='grid grid-pad'>
+  <span *ngFor='let pokemon of selectedPokemons' class='col-1-10'>
+    <div class='module pokemon'>
+      <h4>{{pokemon.name}}</h4>
+    </div>
+    </span>
+  </div>
+
+
 </div>
+
 

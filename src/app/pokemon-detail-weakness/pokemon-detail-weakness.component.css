@@ -1,0 +1,57 @@
+[class*='col-'] {
+  float: left;
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+[class*='col-']:last-of-type {
+  padding-right: 10px;
+}
+
+.grid {
+  margin: 0;
+}
+
+.col-1-10 {
+  width: 10%;
+}
+
+.module {
+  padding: 10px;
+  text-align: center;
+  color: #eee;
+  max-height: 80px;
+  min-width: 80px;
+  background-color: #607d8b;
+  border-radius: 2px;
+}
+
+.module:hover {
+  background-color: #eee;
+  cursor: pointer;
+  color: #607d8b;
+}
+
+.grid-pad {
+  padding: 20px 0;
+}
+
+.grid-pad > [class*='col-']:last-of-type {
+  padding-right: 20px;
+}
+
+@media (max-width: 600px) {
+  .module {
+    font-size: 10px;
+    max-height: 75px; }
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    margin: 0;
+  }
+
+  .module {
+    min-width: 60px;
+  }
+}

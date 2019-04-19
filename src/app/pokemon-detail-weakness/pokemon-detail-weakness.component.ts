@@ -12,7 +12,9 @@ import { PokemonService } from '../pokemon.service';
 })
 
 export class PokemonDetailWeaknessComponent implements OnInit {
-  pokemons: Pokemon[]
+  pokemonsList: Pokemon[]
+  selectedPokemons: Pokemon[] = []
+  bol: boolean;
 
   constructor(
       private route: ActivatedRoute,
@@ -25,10 +27,29 @@ export class PokemonDetailWeaknessComponent implements OnInit {
 
   getPokemons(): void {
     this.pokemonService.getPokemons()
-      .subscribe(pokemons => this.pokemons = pokemons);
+      .subscribe(pokemons => this.pokemonsList = pokemons);
   }
 
-  onTest(): void {
-    console.log(this.pokemons);
+  listSelectedPokemons(pokemon): void {
+    this.selectedPokemons.push(pokemon);
+  }
+
+  clear(): void {
+    this.selectedPokemons = [];
+  }
+  
+  delete(): void {
+    this.selectedPokemons.pop();
+  }
+
+  show(test: boolean): void {
+    if (test == true) {
+      this.getPokemons();
+      this.bol = false;
+    }
+    else {
+      this.pokemonsList = [];
+      this.bol = true;
+    }
   }
 }
