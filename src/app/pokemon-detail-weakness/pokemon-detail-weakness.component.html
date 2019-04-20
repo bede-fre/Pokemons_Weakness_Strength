@@ -2,26 +2,35 @@
 
 <div>
 
-  <button class='show'
-          (click)="show(bol)">Show/hide</button> 
-  <ul class='pokemonList'>
-    <li  *ngFor='let pokemon of pokemonsList' (click)='listSelectedPokemons(pokemon)'><span>{{ pokemon.id }} </span>{{ pokemon.name }}
-    </li>
-    <button class='clear'
-            (click)='clear()'>Clear selction</button>
-    <button class='delete'
-            (click)='delete()'>Delete last one</button> 
-  </ul>
+  <select (change)='inputPokemonName($event)'>
+    <option value='text' disabled>---Choose one---</option>
+    <option *ngFor='let pokemon of pokemonsList' [value]="pokemon.id + '. ' + pokemon.name" >{{pokemon.name}}
+    </option>
+  </select>
+  <input value='{{ pokemonName }}'/>
+  <button (click)='getSelectedPokemons(pokemonName)'>Add weakness</button>
+  <button class='clear'
+            (click)='clear()'>Clear selection</button>
 
   <div class='grid grid-pad'>
   <span *ngFor='let pokemon of selectedPokemons' class='col-1-10'>
     <div class='module pokemon'>
-      <h4>{{pokemon.name}}</h4>
+      <h5>{{pokemon.name}}</h5><span (click)='deleteSelectedPokemon(pokemon)'>X</span>
     </div>
     </span>
   </div>
-
-
 </div>
+
+<!--
+  <button class='show'
+          (click)="show(bol)">Show/hide</button> 
+  <ul class='pokemonList'>
+    <li  *ngFor='let pokemon of pokemonsList' (click)='getSelectedPokemons(pokemon)'><span>{{ pokemon.id }} </span>{{ pokemon.name }}
+    </li>
+
+  </ul>
+-->
+
+
 
 

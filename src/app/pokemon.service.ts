@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -12,18 +13,21 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-@Injectable({ providedIn: 'root' })
+@Injectable(
+  { providedIn: 'root' }
+)
 
 export class PokemonService {
   private pokemonsUrl = 'api/pokemons'; // URL to web api
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private route: ActivatedRoute
   ) { }
 
   /** GET pokemons from the server */
-  getPokemons (): Observable<Pokemon[]> {
+  getPokemons(): Observable<Pokemon[]> {
     return this.http.get<Pokemon[]>(this.pokemonsUrl)
       .pipe(
         tap(_ => this.log('fetched pokemons')),
@@ -83,7 +87,7 @@ export class PokemonService {
     return this.http.delete<Pokemon>(url, httpOptions).pipe(
       tap(_ => this.log(`deleted pokemon id=${id}`)),
       catchError(this.handleError<Pokemon>('deletePokemon'))
-      );
+    );
   }
 
   /** PUT: update the pokemon on the server */
@@ -103,14 +107,14 @@ export class PokemonService {
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
  
-    // TODO: send the error to remote logging infrastructure
-    console.error(error); // log to console instead
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
  
-    // TODO: better job of transforming error for user consumption
-    this.log(`${operation} failed: ${error.message}`);
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
  
-    // Let the app keep running by returning an empty result.
-    return of(result as T);
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
     };
   }
 

@@ -13,7 +13,9 @@ import { PokemonService } from '../pokemon.service';
 export class PokemonsComponent implements OnInit {
   pokemons: Pokemon[]
   
-  constructor(private pokemonService: PokemonService) { }
+  constructor(
+    private pokemonService: PokemonService
+    ) { }
  
   ngOnInit() {
     this.getPokemons();
@@ -28,9 +30,7 @@ export class PokemonsComponent implements OnInit {
     name = name.trim();
     if (!name) { return; }
     this.pokemonService.addPokemon({ name } as Pokemon)
-      .subscribe(pokemon => {
-        this.pokemons.push(pokemon);
-      });
+      .subscribe(pokemon => this.pokemons.push(pokemon));
   }
 
   delete(pokemon: Pokemon): void {
