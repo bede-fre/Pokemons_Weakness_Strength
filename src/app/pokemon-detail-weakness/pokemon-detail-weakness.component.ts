@@ -15,10 +15,8 @@ import { WeaknessStrengthService } from '../weakness-strength.service';
 export class PokemonDetailWeaknessComponent implements OnInit {
   pokemonsList: Pokemon[] = []
   selectedPokemons: Pokemon[] = []
-  bol: boolean;
   pokemonName: string;
-  link: Pokemon
-  tab: Array<string> = []
+  bol: boolean;
 
   constructor(
       private route: ActivatedRoute,
@@ -39,29 +37,27 @@ export class PokemonDetailWeaknessComponent implements OnInit {
   //Get the list of selected pokemons
   getSelectedPokemons(pokemon): void {
     if (pokemon) {
-      this.pokemonName = pokemon;
-      this.pokemonName = this.pokemonName.trim();
-      this.tab = this.pokemonName.split('.', 2);
-      this.link = {
-        id: parseInt(this.tab[0]),
-        name: this.tab[1]
+      const idPage = +this.route.snapshot.paramMap.get('id');
+      this.pokemonName = pokemon.trim();
+      let tab = this.pokemonName.split('.', 2);
+      let link = {
+        id: parseInt(tab[0]),
+        name: tab[1]
       }
-      if (this.samePokemon(this.link.id)) {
-        return ;
-      }
-
+      if (this.samePokemon(link.id) || (link.id == idPage))     //Block if you want to add the same pokemon or the pokemon
+        return ;                                                //your are on its details page
       else {
-          this.selectedPokemons.push(this.link);            //Add pokemon Weakness to its list
-          this.selectedPokemons.sort(function (x, y) {      //Sort pokemon weaknesses list by id
+          this.selectedPokemons.push(link);                     //Add pokemon Weakness to its list
+          this.selectedPokemons.sort(function (x, y) {          //Sort pokemon weaknesses list by id
             return x.id - y.id;
         });
       }
     }
   }
 
-    //
+  //Compare a Pokemon in the selected pokemons list
   samePokemon(pokemon): boolean {
-    for (var cpt = 0 ; cpt < this.selectedPokemons.length ; cpt++) {
+    for (let cpt = 0 ; cpt < this.selectedPokemons.length ; cpt++) {
       if (this.selectedPokemons[cpt].id == pokemon) {
         return (true);
       }
@@ -84,18 +80,15 @@ export class PokemonDetailWeaknessComponent implements OnInit {
     if (this.selectedPokemons.length === 1)
       this.selectedPokemons = [];
     else {
-      var cpt = this.arrayPositionName(pokemon);
+      let cpt = this.arrayPositionName(pokemon);
       this.selectedPokemons.splice(cpt, 1);
     }
   }
 
   //Return pokemon's array position 
   arrayPositionName(pokemon): number {
-      console.log(pokemon.id);
-      for (var cpt = 0 ; cpt < this.selectedPokemons.length ; cpt++) {
-      if (this.selectedPokemons[cpt].id == pokemon.id) {
+      for (let cpt = 0 ; cpt < this.selectedPokemons.length ; cpt++)
+        if (this.selectedPokemons[cpt].id == pokemon.id)
         return (cpt);
-      }
-    }
   }
 }

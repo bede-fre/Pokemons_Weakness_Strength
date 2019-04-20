@@ -1,4 +1,4 @@
-<h5>Weak to :</h5>
+<h4>Edit Weaknesses and Strength</h4>
 
 <div>
 
@@ -8,10 +8,21 @@
     </option>
   </select>
   <input value='{{ pokemonName }}'/>
-  <button (click)='getSelectedPokemons(pokemonName)'>Add weakness</button>
+  <button (click)='getSelectedPokemons(pokemonName)'>Add Weakness</button>
+  <button (click)='getSelectedPokemons(pokemonName)'>Add Strength</button>
   <button class='clear'
             (click)='clear()'>Clear selection</button>
-
+  <h5>Weak to :</h5>
+  <button >Clear Weaknesses</button>
+  <div class='grid grid-pad'>
+  <span *ngFor='let pokemon of selectedPokemons' class='col-1-10'>
+    <div class='module pokemon'>
+      <h5>{{pokemon.name}}</h5><span (click)='deleteSelectedPokemon(pokemon)'>X</span>
+    </div>
+    </span>
+  </div>
+  <h5>Strong to :</h5>
+  <button >Clear Strengths</button>
   <div class='grid grid-pad'>
   <span *ngFor='let pokemon of selectedPokemons' class='col-1-10'>
     <div class='module pokemon'>
