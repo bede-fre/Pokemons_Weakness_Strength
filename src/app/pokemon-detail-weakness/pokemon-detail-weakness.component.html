@@ -1,20 +1,19 @@
 <div>
-  <select (change)='inputPokemonName($event)'>
+  <select (change)='getPokemonNameWeakness($event)'>
     <option value='text' disabled>---Choose one---</option>
     <option *ngFor='let pokemon of pokemonsList' [value]="pokemon.id + '. ' + pokemon.name" >{{pokemon.name}}
     </option>
   </select>
   <input value='{{ pokemonName }}' placeholder='Pokemon Name'/>
-  <button (click)='getSelectedPokemons(pokemonName)'>Add Weakness</button>
+  <button (click)='getSelectedPokemonWeaknesses(pokemonName)'>Add Weakness</button>
   <h5>Weak to :</h5>
-  <button (click)='clear()' >Clear Weaknesses</button>
+  <button (click)='clear()'>Clear Weaknesses</button>
   <div class='grid grid-pad'>
     <span *ngFor='let pokemon of selectedPokemonWeaknesses' class='col-1-10'>
     <div class='module pokemon'>
       <h5>{{pokemon.name}}</h5>
-      <button class='delete' (click)='deleteSelectedPokemon(pokemon)'>X</button>
+      <button class='delete' (click)='deleteSelectedPokemonWeakness(pokemon)'>X</button>
     </div>
     </span>
   </div>
 </div>
-<br>

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Pokemon } from '../pokemon';
 
 import { PokemonService } from '../pokemon.service';
+import { WeaknessStrengthService } from '../weakness-strength.service';
 
 @Component({
   selector: 'app-pokemon-detail-weakness',
@@ -17,9 +18,11 @@ export class PokemonDetailWeaknessComponent implements OnInit {
   pokemonName: string;
   bol: boolean;
 
+
   constructor(
       private route: ActivatedRoute,
-      private pokemonService: PokemonService
+      private pokemonService: PokemonService,
+      private weaknessStrengthService: WeaknessStrengthService
   ) { }
 
   ngOnInit() {
@@ -33,24 +36,9 @@ export class PokemonDetailWeaknessComponent implements OnInit {
   }
 
   //Get the list of selected pokemons
-  getSelectedPokemons(pokemon): void {
-    if (pokemon) {
-      const idPage = +this.route.snapshot.paramMap.get('id');
-      this.pokemonName = pokemon.trim();
-      let tab = this.pokemonName.split('.', 2);
-      let link = {
-        id: parseInt(tab[0]),
-        name: tab[1]
-      }
-      if (this.samePokemon(link.id) || (link.id == idPage))     //Block if you want to add the same pokemon or the pokemon
-        return ;                                                //your are on its details page
-      else {
-          this.selectedPokemonWeaknesses.push(link);                     //Add pokemon Weakness to its list
-          this.selectedPokemonWeaknesses.sort(function (x, y) {          //Sort pokemon weaknesses list by id
-            return x.id - y.id;
-        });
-      }
-    }
+  getSelectedPokemonWeaknesses(pokemon): void {
+    const idPage = +this.route.snapshot.paramMap.get('id');
+    this.selectedPokemonWeaknesses = this.weaknessStrengthService.getSelectedPokemons(pokemon, idPage);
   }
 
   //Compare a Pokemon in the selected pokemons list
@@ -64,29 +52,17 @@ export class PokemonDetailWeaknessComponent implements OnInit {
   }
 
   //Insert Pokemon name in visual input
-  inputPokemonName(event: any): void {
-    this.pokemonName = event.target.value;
+  getPokemonNameWeakness(event: any): void {
+    this.pokemonName = this.weaknessStrengthService.getPokemonName(event);
   }
 
   //Clear all Pokemon Weaknesses
   clear(): void {
-    this.selectedPokemonWeaknesses = [];
+    this.selectedPokemonWeaknesses = this.weaknessStrengthService.clearListSelectedPokemons();
   }
 
   //Delete the pokemon selected
-  deleteSelectedPokemon(pokemon): void {
-    if (this.selectedPokemonWeaknesses.length === 1)
-      this.selectedPokemonWeaknesses = [];
-    else {
-      let cpt = this.arrayPositionName(pokemon);
-      this.selectedPokemonWeaknesses.splice(cpt, 1);
-    }
-  }
-
-  //Return pokemon's array position 
-  arrayPositionName(pokemon): number {
-      for (let cpt = 0 ; cpt < this.selectedPokemonWeaknesses.length ; cpt++)
-        if (this.selectedPokemonWeaknesses[cpt].id == pokemon.id)
-        return (cpt);
+  deleteSelectedPokemonWeakness(pokemon): void {
+    this.selectedPokemonWeaknesses = this.weaknessStrengthService.deleteSelectedPokemon(pokemon);
   }
 }
