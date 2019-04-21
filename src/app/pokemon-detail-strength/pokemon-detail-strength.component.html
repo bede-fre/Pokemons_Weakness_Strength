@@ -11,7 +11,7 @@
   <div class='grid grid-pad'>
     <span *ngFor='let pokemon of selectedPokemonStrengths' class='col-1-10'>
     <div class='module pokemon'>
-      <span>{{pokemon.name}}</span>
+      <h5>{{pokemon.name}}</h5>
       <button class='delete' (click)='deleteSelectedPokemon(pokemon)'>X</button>
     </div>
     </span>
