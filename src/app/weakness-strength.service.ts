@@ -24,7 +24,8 @@ export class WeaknessStrengthService {
         name: tab[1]
       }
       if (isItWeak == true) {
-        if (this.samePokemon(link.id, isItWeak) || link.id == idPage)    //Block if you want to add the same pokemon or the pokemon
+        if (this.samePokemon(link.id, isItWeak) || link.id == idPage || this.weaknessChoices(link.id))    
+        //Block if you want to add the same pokemon or the pokemon
           return (this.selectedPokemonsWeaknesses);                       //your are on its details page
         else {
           this.selectedPokemonsWeaknesses.push(link);                     //Add pokemon Weakness to its list
@@ -35,7 +36,7 @@ export class WeaknessStrengthService {
           return (this.selectedPokemonsWeaknesses);
       }
       else if (isItWeak == false) {
-        if (this.samePokemon(link.id, isItWeak) || link.id == idPage)    //Block if you want to add the same pokemon or the pokemon
+        if (this.samePokemon(link.id, isItWeak) || link.id == idPage || this.strengthChoices(link.id))    //Block if you want to add the same pokemon or the pokemon
           return (this.selectedPokemonsStrengths);                       //your are on its details page
         else {
           this.selectedPokemonsStrengths.push(link);                     //Add pokemon Weakness to its list
@@ -50,17 +51,31 @@ export class WeaknessStrengthService {
   }
 
   //Compare a Pokemon in the selected pokemons list
-  samePokemon(pokemon, isItWeak): boolean {
+  samePokemon(pokemonId, isItWeak): boolean {
     if (isItWeak == true) {
       for (let cpt = 0 ; cpt < this.selectedPokemonsWeaknesses.length ; cpt++)
-        if (this.selectedPokemonsWeaknesses[cpt].id == pokemon)
+        if (this.selectedPokemonsWeaknesses[cpt].id == pokemonId)
           return (true);
     }
     else if (isItWeak == false) {
       for (let cpt = 0 ; cpt < this.selectedPokemonsStrengths.length ; cpt++)
-        if (this.selectedPokemonsStrengths[cpt].id == pokemon)
+        if (this.selectedPokemonsStrengths[cpt].id == pokemonId)
           return (true);
     }
+    return (false);
+  }
+
+  weaknessChoices(pokemonId): boolean {
+    for (let cpt = 0 ; cpt < this.selectedPokemonsStrengths.length ; cpt++)
+        if (this.selectedPokemonsStrengths[cpt].id == pokemonId)
+          return (true);
+    return (false);
+  }
+
+   strengthChoices(pokemonId): boolean {
+    for (let cpt = 0 ; cpt < this.selectedPokemonsWeaknesses.length ; cpt++)
+        if (this.selectedPokemonsWeaknesses[cpt].id == pokemonId)
+          return (true);
     return (false);
   }
 
