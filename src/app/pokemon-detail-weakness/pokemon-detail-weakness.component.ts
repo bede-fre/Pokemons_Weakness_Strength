@@ -16,8 +16,7 @@ export class PokemonDetailWeaknessComponent implements OnInit {
   pokemonsList: Pokemon[] = []
   selectedPokemonWeaknesses: Pokemon[] = []
   pokemonName: string;
-  bol: boolean;
-
+  isItWeak: boolean = true;
 
   constructor(
       private route: ActivatedRoute,
@@ -38,7 +37,7 @@ export class PokemonDetailWeaknessComponent implements OnInit {
   //Get the list of selected pokemons
   getSelectedPokemonWeaknesses(pokemon): void {
     const idPage = +this.route.snapshot.paramMap.get('id');
-    this.selectedPokemonWeaknesses = this.weaknessStrengthService.getSelectedPokemons(pokemon, idPage);
+    this.selectedPokemonWeaknesses = this.weaknessStrengthService.getSelectedPokemons(pokemon, idPage, this.isItWeak);
   }
 
   //Insert Pokemon name in visual input
@@ -48,11 +47,11 @@ export class PokemonDetailWeaknessComponent implements OnInit {
 
   //Clear all Pokemon Weaknesses
   clear(): void {
-    this.selectedPokemonWeaknesses = this.weaknessStrengthService.clearListSelectedPokemons();
+    this.selectedPokemonWeaknesses = this.weaknessStrengthService.clearListSelectedPokemons(this.isItWeak);
   }
 
   //Delete the pokemon selected
   deleteSelectedPokemonWeakness(pokemon): void {
-    this.selectedPokemonWeaknesses = this.weaknessStrengthService.deleteSelectedPokemon(pokemon);
+    this.selectedPokemonWeaknesses = this.weaknessStrengthService.deleteSelectedPokemon(pokemon, this.isItWeak);
   }
 }
