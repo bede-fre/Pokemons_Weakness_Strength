@@ -4,14 +4,14 @@
     <option *ngFor='let pokemon of pokemonsList' [value]="pokemon.id + '. ' + pokemon.name" >{{pokemon.name}}
     </option>
   </select>
-  <input value='{{ pokemonName }}' placeholder='Pokemon Name' disabled/>
+  <input value='{{ pokemonName }}' placeholder='Pokemon Strength' disabled/>
   <button (click)='getSelectedPokemonStrengths(pokemonName)'>Add Strength</button>
   <h5>Strong to :</h5>
   <button (click)='clear()'>Clear Strengths</button>
   <div class='grid grid-pad'>
     <span *ngFor='let pokemon of selectedPokemonStrengths' class='col-1-10'>
     <div class='module pokemon'>
-      <h5>{{pokemon.name}}</h5>
+      <p class ='id'>Id: {{pokemon.id}}</p><h5>{{pokemon.name}}</h5>
       <button class='delete' (click)='deleteSelectedPokemonStrength(pokemon)'>X</button>
     </div>
     </span>

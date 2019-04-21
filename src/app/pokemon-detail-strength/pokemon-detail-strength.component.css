@@ -16,6 +16,11 @@
   width: 10%;
 }
 
+p {
+  font-size: 12px;
+
+}
+
 .module {
   padding: 10px;
   text-align: center;

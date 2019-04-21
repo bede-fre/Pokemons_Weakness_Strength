@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+
 import { Pokemon } from './pokemon';
 
 @Injectable(
@@ -9,7 +12,6 @@ import { Pokemon } from './pokemon';
 export class WeaknessStrengthService {
   selectedPokemonsWeaknesses: Pokemon[] = []
   selectedPokemonsStrengths: Pokemon[] = []
-  selectedPokemons: Pokemon[] = []
   pokemonName: string;
 
   constructor() { }
@@ -19,51 +21,59 @@ export class WeaknessStrengthService {
     if (pokemon) {
       this.pokemonName = pokemon.trim();
       let tab = this.pokemonName.split('.', 2);
-      let link = {
+      let pokemonLink = {
         id: parseInt(tab[0]),
         name: tab[1]
       }
-      if (isItWeak == true) {
-        if (this.samePokemon(link.id, isItWeak) || link.id == idPage || this.weaknessChoices(link.id))    
-        //Block if you want to add the same pokemon or the pokemon
-          return (this.selectedPokemonsWeaknesses);                       //your are on its details page
-        else {
-          this.selectedPokemonsWeaknesses.push(link);                     //Add pokemon Weakness to its list
-          this.selectedPokemonsWeaknesses.sort(function (x, y) {          //Sort pokemon weaknesses list by id
-            return x.id - y.id;
-          });
-        }
-          return (this.selectedPokemonsWeaknesses);
-      }
-      else if (isItWeak == false) {
-        if (this.samePokemon(link.id, isItWeak) || link.id == idPage || this.strengthChoices(link.id))    //Block if you want to add the same pokemon or the pokemon
-          return (this.selectedPokemonsStrengths);                       //your are on its details page
-        else {
-          this.selectedPokemonsStrengths.push(link);                     //Add pokemon Weakness to its list
-          this.selectedPokemonsStrengths.sort(function (x, y) {          //Sort pokemon weaknesses list by id
-            return x.id - y.id;
-          });
-        }
-          return (this.selectedPokemonsStrengths);
-      }
+      if (isItWeak == true)
+        return (this.returnWeaknessPokemonList(pokemonLink, idPage));
+      else if (isItWeak == false)
+        return (this.returnStrengthPokemonList(pokemonLink, idPage));
     }
     return ;
   }
 
+  returnWeaknessPokemonList(pokemon, idPage): Pokemon[] {
+    if (this.comparePokemonWeaknessList(pokemon.id) || pokemon.id == idPage || this.weaknessChoices(pokemon.id))
+      return (this.selectedPokemonsWeaknesses);                      //Block if you want to add the same pokemon or the pokemon
+    else {                                                           //your are on its details page
+      this.selectedPokemonsWeaknesses.push(pokemon);                 //Add pokemon Weakness to its list
+      this.selectedPokemonsWeaknesses.sort(function (x, y) {         //Sort pokemon weaknesses list by id
+        return x.id - y.id;
+      });
+    }
+    return (this.selectedPokemonsWeaknesses);
+  }
+
   //Compare a Pokemon in the selected pokemons list
-  samePokemon(pokemonId, isItWeak): boolean {
-    if (isItWeak == true) {
-      for (let cpt = 0 ; cpt < this.selectedPokemonsWeaknesses.length ; cpt++)
-        if (this.selectedPokemonsWeaknesses[cpt].id == pokemonId)
-          return (true);
-    }
-    else if (isItWeak == false) {
-      for (let cpt = 0 ; cpt < this.selectedPokemonsStrengths.length ; cpt++)
-        if (this.selectedPokemonsStrengths[cpt].id == pokemonId)
-          return (true);
-    }
+  comparePokemonWeaknessList(pokemonId): boolean {
+    for (let cpt = 0 ; cpt < this.selectedPokemonsWeaknesses.length ; cpt++)
+      if (this.selectedPokemonsWeaknesses[cpt].id == pokemonId)
+        return (true);
     return (false);
   }
+
+  returnStrengthPokemonList(pokemon, idPage): Pokemon[] {   
+    if (this.comparePokemonStrengthList(pokemon.id) || pokemon.id == idPage || this.strengthChoices(pokemon.id))    
+      return (this.selectedPokemonsStrengths);                       //Block if you want to add the same pokemon or the pokemon
+    else {                                                           //your are on its details page
+      this.selectedPokemonsStrengths.push(pokemon);                  //Add pokemon Weakness to its list
+      this.selectedPokemonsStrengths.sort(function (x, y) {          //Sort pokemon weaknesses list by id
+        return x.id - y.id;
+      });
+    }
+  return (this.selectedPokemonsStrengths);
+  }
+
+
+  //Compare a Pokemon in the selected pokemons list
+  comparePokemonStrengthList(pokemonId): boolean {
+    for (let cpt = 0 ; cpt < this.selectedPokemonsStrengths.length ; cpt++)
+      if (this.selectedPokemonsStrengths[cpt].id == pokemonId)
+        return (true);
+    return (false);
+  }
+
 
   weaknessChoices(pokemonId): boolean {
     for (let cpt = 0 ; cpt < this.selectedPokemonsStrengths.length ; cpt++)
