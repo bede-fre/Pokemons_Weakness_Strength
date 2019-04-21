@@ -16,7 +16,6 @@ export class WeaknessStrengthService {
   pokemonsList: Pokemon[] = []
   selectedPokemons: Pokemon[] =[]
   pokemonName: string;
-  bol: boolean;
 
   constructor(
     private pokemonService: PokemonService
@@ -37,24 +36,24 @@ export class WeaknessStrengthService {
         id: parseInt(tab[0]),
         name: tab[1]
       }
-      if (this.samePokemon(link.id) || (link.id == idPage))       //Block if you want to add the same pokemon or the pokemon
-        return (this.selectedPokemons);                          //your are on its details page
+      if (this.samePokemon(link.id) || (link.id == idPage))  //Block if you want to add the same pokemon or the pokemon
+        return (this.selectedPokemons);                                      //your are on its details page
       else {
-          this.selectedPokemons.push(link);                     //Add pokemon Weakness to its list
-          this.selectedPokemons.sort(function (x, y) {          //Sort pokemon weaknesses list by id
-            return x.id - y.id;
+        this.selectedPokemons.push(link);                     //Add pokemon Weakness to its list
+        this.selectedPokemons.sort(function (x, y) {          //Sort pokemon weaknesses list by id
+          return x.id - y.id;
         });
       }
-      return (this.selectedPokemons);
+        return (this.selectedPokemons);
     }
     return ;
   }
 
   //Compare a Pokemon in the selected pokemons list
   samePokemon(pokemon): boolean {
-    for (let cpt = 0 ; cpt < this.selectedPokemons.length ; cpt++)
-      if (this.selectedPokemons[cpt].id == pokemon)
-        return (true);
+      for (let cpt = 0 ; cpt < this.selectedPokemons.length ; cpt++)
+        if (this.selectedPokemons[cpt].id == pokemon)
+          return (true);
     return (false);
   }
 

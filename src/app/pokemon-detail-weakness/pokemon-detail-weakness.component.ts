@@ -41,16 +41,6 @@ export class PokemonDetailWeaknessComponent implements OnInit {
     this.selectedPokemonWeaknesses = this.weaknessStrengthService.getSelectedPokemons(pokemon, idPage);
   }
 
-  //Compare a Pokemon in the selected pokemons list
-  samePokemon(pokemon): boolean {
-    for (let cpt = 0 ; cpt < this.selectedPokemonWeaknesses.length ; cpt++) {
-      if (this.selectedPokemonWeaknesses[cpt].id == pokemon) {
-        return (true);
-      }
-    }
-    return (false);
-  }
-
   //Insert Pokemon name in visual input
   getPokemonNameWeakness(event: any): void {
     this.pokemonName = this.weaknessStrengthService.getPokemonName(event);

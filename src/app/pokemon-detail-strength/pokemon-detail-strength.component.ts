@@ -16,7 +16,6 @@ export class PokemonDetailStrengthComponent implements OnInit {
   pokemonsList: Pokemon[] = []
   selectedPokemonStrengths: Pokemon[] = []
   pokemonName: string;
-  bol: boolean;
 
   constructor(
       private route: ActivatedRoute,
@@ -34,21 +33,10 @@ export class PokemonDetailStrengthComponent implements OnInit {
       .subscribe(pokemons => this.pokemonsList = pokemons);
   }
 
-
   //Get the list of selected pokemons
   getSelectedPokemonStrengths(pokemon): void {
     const idPage = +this.route.snapshot.paramMap.get('id');
     this.selectedPokemonStrengths = this.weaknessStrengthService.getSelectedPokemons(pokemon, idPage);
-  }
-
-  //Compare a Pokemon in the selected pokemons list
-  samePokemon(pokemon): boolean {
-    for (let cpt = 0 ; cpt < this.selectedPokemonStrengths.length ; cpt++) {
-      if (this.selectedPokemonStrengths[cpt].id == pokemon) {
-        return (true);
-      }
-    }
-    return (false);
   }
 
   //Insert Pokemon name in visual input
