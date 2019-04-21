@@ -6,8 +6,10 @@
       <input [(ngModel)]='pokemon.name' placeholder='name'/>
     </label>
   </div>
-  <app-pokemon-detail-weakness></app-pokemon-detail-weakness>
-
   <button (click)='goBack()'>go back</button>
   <button (click)='save()'>save</button>
+
+  <h4>Edit Weaknesses and Strengths :</h4>
+  <app-pokemon-detail-weakness></app-pokemon-detail-weakness>
+  <app-pokemon-detail-strength></app-pokemon-detail-strength>
 </div>

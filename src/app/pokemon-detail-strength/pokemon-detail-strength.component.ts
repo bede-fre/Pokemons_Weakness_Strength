@@ -6,14 +6,14 @@ import { Pokemon } from '../pokemon';
 import { PokemonService } from '../pokemon.service';
 
 @Component({
-  selector: 'app-pokemon-detail-weakness',
-  templateUrl: './pokemon-detail-weakness.component.html',
-  styleUrls: ['./pokemon-detail-weakness.component.css']
+  selector: 'app-pokemon-detail-strength',
+  templateUrl: './pokemon-detail-strength.component.html',
+  styleUrls: ['./pokemon-detail-strength.component.css']
 })
 
-export class PokemonDetailWeaknessComponent implements OnInit {
+export class PokemonDetailStrengthComponent implements OnInit {
   pokemonsList: Pokemon[] = []
-  selectedPokemonWeaknesses: Pokemon[] = []
+  selectedPokemonStrengths: Pokemon[] = []
   pokemonName: string;
   bol: boolean;
 
@@ -45,8 +45,8 @@ export class PokemonDetailWeaknessComponent implements OnInit {
       if (this.samePokemon(link.id) || (link.id == idPage))     //Block if you want to add the same pokemon or the pokemon
         return ;                                                //your are on its details page
       else {
-          this.selectedPokemonWeaknesses.push(link);                     //Add pokemon Weakness to its list
-          this.selectedPokemonWeaknesses.sort(function (x, y) {          //Sort pokemon weaknesses list by id
+          this.selectedPokemonStrengths.push(link);                     //Add pokemon Weakness to its list
+          this.selectedPokemonStrengths.sort(function (x, y) {          //Sort pokemon weaknesses list by id
             return x.id - y.id;
         });
       }
@@ -55,8 +55,8 @@ export class PokemonDetailWeaknessComponent implements OnInit {
 
   //Compare a Pokemon in the selected pokemons list
   samePokemon(pokemon): boolean {
-    for (let cpt = 0 ; cpt < this.selectedPokemonWeaknesses.length ; cpt++) {
-      if (this.selectedPokemonWeaknesses[cpt].id == pokemon) {
+    for (let cpt = 0 ; cpt < this.selectedPokemonStrengths.length ; cpt++) {
+      if (this.selectedPokemonStrengths[cpt].id == pokemon) {
         return (true);
       }
     }
@@ -70,23 +70,23 @@ export class PokemonDetailWeaknessComponent implements OnInit {
 
   //Clear all Pokemon Weaknesses
   clear(): void {
-    this.selectedPokemonWeaknesses = [];
+    this.selectedPokemonStrengths = [];
   }
 
   //Delete the pokemon selected
   deleteSelectedPokemon(pokemon): void {
-    if (this.selectedPokemonWeaknesses.length === 1)
-      this.selectedPokemonWeaknesses = [];
+    if (this.selectedPokemonStrengths.length === 1)
+      this.selectedPokemonStrengths = [];
     else {
       let cpt = this.arrayPositionName(pokemon);
-      this.selectedPokemonWeaknesses.splice(cpt, 1);
+      this.selectedPokemonStrengths.splice(cpt, 1);
     }
   }
 
   //Return pokemon's array position 
   arrayPositionName(pokemon): number {
-      for (let cpt = 0 ; cpt < this.selectedPokemonWeaknesses.length ; cpt++)
-        if (this.selectedPokemonWeaknesses[cpt].id == pokemon.id)
+      for (let cpt = 0 ; cpt < this.selectedPokemonStrengths.length ; cpt++)
+        if (this.selectedPokemonStrengths[cpt].id == pokemon.id)
         return (cpt);
   }
 }

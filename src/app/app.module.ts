@@ -10,13 +10,15 @@ import { PokemonsComponent } from './pokemons/pokemons.component';
 import { PokemonDetailComponent } from './pokemon-detail/pokemon-detail.component';
 import { MessageComponent } from './message/message.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PokemonDetailWeaknessComponent } from './pokemon-detail-weakness/pokemon-detail-weakness.component';
+import { PokemonDetailStrengthComponent } from './pokemon-detail-strength/pokemon-detail-strength.component';
 
 import { PokemonService } from './pokemon.service';
 import { MessageService } from './message.service';
 import { InMemoryDataService } from './in-memory-data.service';
 import { PokemonSearchComponent } from './pokemon-search/pokemon-search.component';
-import { PokemonDetailWeaknessComponent } from './pokemon-detail-weakness/pokemon-detail-weakness.component';
 import { WeaknessStrengthService } from './weakness-strength.service';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { WeaknessStrengthService } from './weakness-strength.service';
     MessageComponent,
     DashboardComponent,
     PokemonSearchComponent,
-    PokemonDetailWeaknessComponent
+    PokemonDetailWeaknessComponent,
+    PokemonDetailStrengthComponent
   ],
   
   imports:      [ 
