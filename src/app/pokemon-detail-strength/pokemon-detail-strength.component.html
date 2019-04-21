@@ -4,7 +4,7 @@
     <option *ngFor='let pokemon of pokemonsList' [value]="pokemon.id + '. ' + pokemon.name" >{{pokemon.name}}
     </option>
   </select>
-  <input value='{{ pokemonName }}' placeholder='Pokemon Name'/>
+  <input value='{{ pokemonName }}' placeholder='Pokemon Name' disabled/>
   <button (click)='getSelectedPokemonStrengths(pokemonName)'>Add Strength</button>
   <h5>Strong to :</h5>
   <button (click)='clear()'>Clear Strengths</button>
