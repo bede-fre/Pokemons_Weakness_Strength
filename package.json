@@ -12,6 +12,7 @@
     "@angular/router": "7.2.5",
     "angular-in-memory-web-api": "^0.8.0",
     "core-js": "2.6.5",
+    "eslint-plugin-angular": "^4.0.0",
     "rxjs": "6.4.0",
     "zone.js": "0.8.29"
   },
