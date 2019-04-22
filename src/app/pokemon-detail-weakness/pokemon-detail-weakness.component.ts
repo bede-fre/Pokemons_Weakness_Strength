@@ -13,7 +13,7 @@ import { WeaknessStrengthService } from '../weakness-strength.service';
 })
 
 export class PokemonDetailWeaknessComponent implements OnInit {
-  pokemonsList: Pokemon[] = []
+  pokemonsList: Pokemon[]
   selectedPokemonWeaknesses: Pokemon[] = []
   pokemonName: string;
   isItWeak: boolean = true;
