@@ -13,10 +13,10 @@ import { WeaknessStrengthService } from '../weakness-strength.service';
 })
 
 export class PokemonDetailStrengthComponent implements OnInit {
-  pokemonsList: Pokemon[]
+  pokemonsFullList: Pokemon[]
   selectedPokemonStrengths: Pokemon[] = []
-  pokemonName: string;
-  isItWeak: boolean = false;
+  pokemonSelectedIdAndName: string;
+  isItWeaknessOrStrengthList: boolean = false;
 
   constructor(
       private route: ActivatedRoute,
@@ -25,33 +25,33 @@ export class PokemonDetailStrengthComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getPokemons();
+    this.getPokemonsServerList();
   }
 
   //Get the full list of pokemons
-  getPokemons(): void {
-    this.pokemonService.getPokemons()
-      .subscribe(pokemons => this.pokemonsList = pokemons);
+  getPokemonsServerList(): void {
+    this.pokemonService.getPokemonsFullListFromServer()
+      .subscribe(pokemons => this.pokemonsFullList = pokemons);
   }
 
   //Get the list of selected pokemons
-  getSelectedPokemonStrengths(pokemon): void {
-    const idPage = +this.route.snapshot.paramMap.get('id');
-    this.selectedPokemonStrengths = this.weaknessStrengthService.getSelectedPokemons(pokemon, idPage, this.isItWeak);
+  getSelectedPokemonStrengths(pokemonSelectedIdAndName): void {
+    const pokemonIdActualDetailPage = +this.route.snapshot.paramMap.get('id');     //Get Id of the pokemon detail page you are on
+    this.selectedPokemonStrengths = this.weaknessStrengthService.getSelectedPokemons(pokemonSelectedIdAndName, pokemonIdActualDetailPage, this.isItWeaknessOrStrengthList);
   }
 
   //Insert Pokemon name in visual input
   getPokemonNameStrength(event: any): void {
-    this.pokemonName = this.weaknessStrengthService.getPokemonName(event);
+    this.pokemonSelectedIdAndName = this.weaknessStrengthService.getPokemonName(event);
   }
 
-  //Clear all Pokemon Weaknesses
+  //Clear all Pokemons from Strength List
   clear(): void {
-    this.selectedPokemonStrengths = this.weaknessStrengthService.clearListSelectedPokemons(this.isItWeak);
+    this.selectedPokemonStrengths = this.weaknessStrengthService.clearListSelectedPokemons(this.isItWeaknessOrStrengthList);
   }
 
-  //Delete the pokemon selected
-  deleteSelectedPokemonStrength(pokemon): void {
-    this.selectedPokemonStrengths = this.weaknessStrengthService.deleteSelectedPokemon(pokemon, this.isItWeak);
+  //Delete the pokemon selected from Strength List
+  deleteSelectedPokemonStrength(pokemonToDelete): void {
+    this.selectedPokemonStrengths = this.weaknessStrengthService.deleteSelectedPokemon(pokemonToDelete, this.isItWeaknessOrStrengthList);
   }
 }

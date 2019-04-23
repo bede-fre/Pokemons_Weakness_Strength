@@ -27,7 +27,7 @@ export class PokemonService {
   ) { }
 
   /** GET pokemons from the server */
-  getPokemons(): Observable<Pokemon[]> {
+  getPokemonsFullListFromServer(): Observable<Pokemon[]> {
     return this.http.get<Pokemon[]>(this.pokemonsUrl)
       .pipe(
         tap(_ => this.log('fetched pokemons')),
@@ -36,36 +36,36 @@ export class PokemonService {
   }
 
   /** GET pokemon by id. Return `undefined` when id not found */
-  getPokemonNo404<Data>(id: number): Observable<Pokemon> {
-    const url = `${this.pokemonsUrl}/?id=${id}`;
+  getPokemonNo404<Data>(pokemonId: number): Observable<Pokemon> {
+    const url = `${this.pokemonsUrl}/?id=${pokemonId}`;
     return this.http.get<Pokemon[]>(url)
       .pipe(
         map(pokemons => pokemons[0]), // returns a {0|1} element array
         tap(p => {
           const outcome = p ? `fetched` : `did not find`;
-          this.log(`${outcome} pokemon id=${id}`);
+          this.log(`${outcome} pokemon id=${pokemonId}`);
         }),
-        catchError(this.handleError<Pokemon>(`getPokemon id=${id}`))
+        catchError(this.handleError<Pokemon>(`getPokemon id=${pokemonId}`))
       );
   }
 
   /** GET pokemon by id. Will 404 if id not found */
-  getPokemon(id: number): Observable<Pokemon> {
-    const url = `${this.pokemonsUrl}/${id}`;
+  getPokemonByIdFromServer(pokemonId: number): Observable<Pokemon> {
+    const url = `${this.pokemonsUrl}/${pokemonId}`;
     return this.http.get<Pokemon>(url).pipe(
-      tap(_ => this.log(`fetched pokemon id=${id}`)),
-      catchError(this.handleError<Pokemon>(`getPokemon id=${id}`))
+      tap(_ => this.log(`fetched pokemon id=${pokemonId}`)),
+      catchError(this.handleError<Pokemon>(`getPokemon id=${pokemonId}`))
     );
   }
 
   /* GET pokemons whose name contains search term */
-  searchPokemons(term: string): Observable<Pokemon[]> {
-    if (!term.trim()) {
-      // if not search term, return empty pokemon array.
+  searchPokemonNameOnServer(pokemonName: string): Observable<Pokemon[]> {
+    if (!pokemonName.trim()) {
+      // if not search pokemonName, return empty pokemon array.
       return of([]);
     }
-   return this.http.get<Pokemon[]>(`${this.pokemonsUrl}/?name=${term}`).pipe(
-      tap(_ => this.log(`found pokemons matching "${term}"`)),
+   return this.http.get<Pokemon[]>(`${this.pokemonsUrl}/?name=${pokemonName}`).pipe(
+      tap(_ => this.log(`found pokemons matching "${pokemonName}"`)),
       catchError(this.handleError<Pokemon[]>('searchPokemons', []))
     );
   }
@@ -73,16 +73,16 @@ export class PokemonService {
   //////// Save methods //////////
 
   /** POST: add a new pokemon to the server */
-  addPokemon (pokemon: Pokemon): Observable<Pokemon> {
-    return this.http.post<Pokemon>(this.pokemonsUrl, pokemon, httpOptions).pipe(
+  addPokemonOnServer (pokemonToAdd: Pokemon): Observable<Pokemon> {
+    return this.http.post<Pokemon>(this.pokemonsUrl, pokemonToAdd, httpOptions).pipe(
       tap((newPokemon: Pokemon) => this.log(`added pokemon w/ id=${newPokemon.id}`)),
       catchError(this.handleError<Pokemon>('addPokemon'))
     );
   }
 
   /** DELETE: delete the pokemon from the server */
-  deletePokemon (pokemon: Pokemon | number): Observable<Pokemon> {
-    const id = typeof pokemon === 'number' ? pokemon : pokemon.id;
+  deletePokemonFromServer (pokemonToDelete: Pokemon | number): Observable<Pokemon> {
+    const id = typeof pokemonToDelete === 'number' ? pokemonToDelete : pokemonToDelete.id;
     const url = `${this.pokemonsUrl}/${id}`;
     return this.http.delete<Pokemon>(url, httpOptions).pipe(
       tap(_ => this.log(`deleted pokemon id=${id}`)),
@@ -91,9 +91,9 @@ export class PokemonService {
   }
 
   /** PUT: update the pokemon on the server */
-  updatePokemon (pokemon: Pokemon): Observable<any> {
-    return this.http.put(this.pokemonsUrl, pokemon, httpOptions).pipe(
-      tap(_ => this.log(`updated pokemon id=${pokemon.id}`)),
+  updatePokemonNameOnServer (pokemonToUpdate: Pokemon): Observable<any> {
+    return this.http.put(this.pokemonsUrl, pokemonToUpdate, httpOptions).pipe(
+      tap(_ => this.log(`updated pokemon id=${pokemonToUpdate.id}`)),
       catchError(this.handleError<any>('updatePokemon'))
     );
   }

@@ -1,18 +1,18 @@
 <div>
   <select (change)='getPokemonNameWeakness($event)'>
-    <option value='text' disabled>---Choose one---</option>
-    <option *ngFor='let pokemon of pokemonsList' [value]="pokemon.id + '. ' + pokemon.name" >{{pokemon.name}}
+    <option value='text' disabled>---Choose one---</option>                         <!-- Scrollbar selection pokemon List to add -->
+    <option *ngFor='let pokemon of pokemonsFullList' [value]="pokemon.id + '. ' + pokemon.name" >{{pokemon.name}}
     </option>
   </select>
-  <input value='{{ pokemonName }}' placeholder='Pokemon Weakness' disabled/>
-  <button (click)='getSelectedPokemonWeaknesses(pokemonName)'>Add Weakness</button>
+  <input value='{{ pokemonSelectedIdAndName }}' placeholder='Pokemon Weakness' disabled/>        <!-- Show id an name pokemon user select -->
+  <button (click)='getSelectedPokemonWeaknesses(pokemonSelectedIdAndName)'>Add Weakness</button> <!-- Add pokemon in input above in Weakness List -->
   <h5>Weak to :</h5>
-  <button (click)='clear()'>Clear Weaknesses</button>
+  <button (click)='clear()'>Clear Weaknesses</button>                               <!-- Delete all pokemon on weakness list -->
   <div class='grid grid-pad'>
-    <span *ngFor='let pokemon of selectedPokemonWeaknesses' class='col-1-10'>
+    <span *ngFor='let pokemon of selectedPokemonWeaknesses' class='col-1-10'>       <!-- Show all pokemon on weakness list sort by id -->
     <div class='module pokemon'>
       <p class ='id'>Id: {{pokemon.id}}</p><h5>{{pokemon.name}}</h5>
-      <button class='delete' (click)='deleteSelectedPokemonWeakness(pokemon)'>X</button>
+      <button class='delete' (click)='deleteSelectedPokemonWeakness(pokemon)'>X</button> <!-- delete pokemon from the weakness list -->
     </div>
     </span>
   </div>

@@ -1,13 +1,13 @@
-<div *ngIf='pokemon'>
-  <h2>{{pokemon.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{pokemon.id}}</div>
+<div *ngIf='pokemonSelectByIdPage'>
+  <h2>{{pokemonSelectByIdPage.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{pokemonSelectByIdPage.id}}</div>
   <div>
     <label>Name:
-      <input [(ngModel)]='pokemon.name' placeholder='name'/>
+      <input [(ngModel)]='pokemonSelectByIdPage.name' placeholder='name'/>  <!-- Show the pokemon name and can change Pokemon Name here -->
     </label>
   </div>
-  <button (click)='goBack()'>go back</button>
-  <button (click)='save()'>save</button>
+  <button (click)='goBackToLastPageVisited()'>go back</button>              <!-- go back to last page visited -->
+  <button (click)='savePokemonName()'>save</button>                         <!-- save the name entered in the input above -->     
 
   <h4>Edit Weaknesses and Strengths :</h4>
   <app-pokemon-detail-weakness></app-pokemon-detail-weakness>

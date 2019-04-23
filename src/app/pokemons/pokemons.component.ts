@@ -11,7 +11,7 @@ import { PokemonService } from '../pokemon.service';
 })
 
 export class PokemonsComponent implements OnInit {
-  pokemons: Pokemon[]
+  pokemonsFullList: Pokemon[]
   
   constructor(
     private pokemonService: PokemonService
@@ -22,19 +22,19 @@ export class PokemonsComponent implements OnInit {
   }
 
   getPokemons(): void {
-    this.pokemonService.getPokemons()
-      .subscribe(pokemons => this.pokemons = pokemons);
+    this.pokemonService.getPokemonsFullListFromServer()
+      .subscribe(pokemons => this.pokemonsFullList = pokemons);
   }
 
-  add(name: string): void {
-    name = name.trim();
+  add(pokemonName: string): void {
+    pokemonName = pokemonName.trim();
     if (!name) { return; }
-    this.pokemonService.addPokemon({ name } as Pokemon)
-      .subscribe(pokemon => this.pokemons.push(pokemon));
+    this.pokemonService.addPokemonOnServer({ pokemonName } as Pokemon)
+      .subscribe(pokemon => this.pokemonsFullList.push(pokemon));
   }
 
   delete(pokemon: Pokemon): void {
-    this.pokemons = this.pokemons.filter(p => p !== pokemon);
-    this.pokemonService.deletePokemon(pokemon).subscribe();
+    this.pokemonsFullList = this.pokemonsFullList.filter(p => p !== pokemon);
+    this.pokemonService.deletePokemonFromServer(pokemon).subscribe();
   }
 }

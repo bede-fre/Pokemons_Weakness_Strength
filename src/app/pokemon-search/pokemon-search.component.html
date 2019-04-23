@@ -1,10 +1,8 @@
 <div id='search-component'>
   <h4>Pokemon Search</h4>
- 
-  <input #searchBox id='search-box' (input)='search(searchBox.value)'/>
- 
+  <input #searchBox id='search-box' (input)='search(searchBox.value)'/>  <!-- Input user who can write the pokemon to find -->
   <ul class='search-result'>
-    <li *ngFor='let pokemon of pokemons$ | async' >
+    <li *ngFor='let pokemon of pokemons$ | async'>                      <!-- Display some pokemon name in funciton of user input below-->
       <a routerLink='/detail/{{pokemon.id}}'>
         {{pokemon.name}}
       </a>

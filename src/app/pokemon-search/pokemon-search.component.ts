@@ -14,18 +14,18 @@ import { PokemonService } from '../pokemon.service';
 })
 
 export class PokemonSearchComponent implements OnInit {
-  pokemons$: Observable<Pokemon[]>;
+  pokemonsName$: Observable<Pokemon[]>;
   private searchTerms = new Subject<string>();
 
   constructor(private pokemonService: PokemonService) { }
 
   // Push a search term into the observable stream.
-  search(term: string): void {
-    this.searchTerms.next(term);
+  search(pokemonName: string): void {
+    this.searchTerms.next(pokemonName);
   }
 
   ngOnInit(): void {
-      this.pokemons$ = this.searchTerms.pipe(
+      this.pokemonsName$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
  
@@ -33,7 +33,7 @@ export class PokemonSearchComponent implements OnInit {
       distinctUntilChanged(),
  
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.pokemonService.searchPokemons(term)),
+      switchMap((pokemonName: string) => this.pokemonService.searchPokemonNameOnServer(pokemonName)),
     );
   }
 }

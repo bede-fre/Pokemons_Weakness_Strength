@@ -13,7 +13,7 @@ import { PokemonService } from '../pokemon.service';
 })
 
 export class PokemonDetailComponent implements OnInit {
-  pokemon: Pokemon;
+  pokemonSelectByIdPage: Pokemon;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,21 +22,21 @@ export class PokemonDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getPokemon();
+    this.getPokemon();                                                    //Get Pokemon in full list update in real time
   }
 
   getPokemon(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.pokemonService.getPokemon(id)
-      .subscribe(pokemon => this.pokemon = pokemon);
+    const idPokemonActualPage = +this.route.snapshot.paramMap.get('id');  //Get Id of the pokemon detail page you are on 
+    this.pokemonService.getPokemonByIdFromServer(idPokemonActualPage)     //get pokemon on the server by its id 
+      .subscribe(pokemon => this.pokemonSelectByIdPage = pokemon);
   }
 
-  goBack(): void {
+  goBackToLastPageVisited(): void {
     this.location.back();
   }
 
-  save(): void {
-    this.pokemonService.updatePokemon(this.pokemon)
-      .subscribe(() => this.goBack());
+  savePokemonName(): void {
+    this.pokemonService.updatePokemonNameOnServer(this.pokemonSelectByIdPage) //Save name users input and update pokemon list on the server
+      .subscribe(() => this.goBackToLastPageVisited());                         //Go back to last page visit
   }
 }
