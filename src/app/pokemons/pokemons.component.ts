@@ -16,25 +16,26 @@ export class PokemonsComponent implements OnInit {
   constructor(
     private pokemonService: PokemonService
     ) { }
- 
+
   ngOnInit() {
-    this.getPokemons();
+    this.getPokemonsServerList();
   }
 
-  getPokemons(): void {
+  getPokemonsServerList(): void {
     this.pokemonService.getPokemonsFullListFromServer()
-      .subscribe(pokemons => this.pokemonsFullList = pokemons);
+    .subscribe(pokemons => this.pokemonsFullList = pokemons);
   }
 
-  add(pokemonName: string): void {
-    pokemonName = pokemonName.trim();
-    if (!name) { return; }
-    this.pokemonService.addPokemonOnServer({ pokemonName } as Pokemon)
-      .subscribe(pokemon => this.pokemonsFullList.push(pokemon));
+  addPokemonToFullList(name: string): void {
+    name = name.trim();
+    if (!name){return; }
+    console.log(name);
+    this.pokemonService.addPokemonOnserver({ name } as Pokemon)
+      .subscribe(pokemonAddToFullList => this.pokemonsFullList.push(pokemonAddToFullList));
   }
 
-  delete(pokemon: Pokemon): void {
-    this.pokemonsFullList = this.pokemonsFullList.filter(p => p !== pokemon);
-    this.pokemonService.deletePokemonFromServer(pokemon).subscribe();
+  deletePokemonFromFullList(pokemonToDelete: Pokemon): void {
+    this.pokemonsFullList = this.pokemonsFullList.filter(pokemonCompare => pokemonCompare !== pokemonToDelete);
+    this.pokemonService.deletePokemonFromServer(pokemonToDelete).subscribe();
   }
 }

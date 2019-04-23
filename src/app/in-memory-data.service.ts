@@ -26,7 +26,7 @@ export class InMemoryDataService implements InMemoryDbService {
 
   // Overrides the genId method to ensure that a pokemon always has an id.
   // If the pokemons array is empty,
-  // the method below returns the initial number (11).
+  // the method below returns the initial number (1).
   // if the pokemons array is not empty, the method below returns the highest
   // pokemon id + 1.
 

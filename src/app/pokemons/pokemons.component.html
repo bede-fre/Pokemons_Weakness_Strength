@@ -1,18 +1,18 @@
 <h2>My Pokemons</h2>
 <div>
   <label>Pokemon name:
-    <input #pokemonName />
+    <input #pokemonName />              <!-- User input to Add new pokenon -->
   </label>
   <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)='add(pokemonName.value); pokemonName.value=null'>add</button>
+  <button (click)='addPokemonToFullList(pokemonName.value); pokemonName.value=null'>add</button> <!-- Add the new pokemon tu full pokemon List-->
 </div>
 
 <ul class='pokemons'>
-  <li *ngFor='let pokemon of pokemons'>
+  <li *ngFor='let pokemon of pokemonsFullList'>
     <a routerLink='/detail/{{pokemon.id}}'>
       <span class='badge'>{{pokemon.id}}</span> {{pokemon.name}}
     </a>
     <button class='delete' title='delete pokemon'
-      (click)='delete(pokemon)'>x</button>
+      (click)='deletePokemonFromFullList(pokemon)'>x</button>
   </li>
 </ul>

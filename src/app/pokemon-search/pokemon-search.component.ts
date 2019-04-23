@@ -15,17 +15,17 @@ import { PokemonService } from '../pokemon.service';
 
 export class PokemonSearchComponent implements OnInit {
   pokemonsName$: Observable<Pokemon[]>;
-  private searchTerms = new Subject<string>();
+  private searchInPokemonsList = new Subject<string>();
 
   constructor(private pokemonService: PokemonService) { }
 
   // Push a search term into the observable stream.
-  search(pokemonName: string): void {
-    this.searchTerms.next(pokemonName);
+  searchPokemonName(pokemonName: string): void {
+    this.searchInPokemonsList.next(pokemonName);
   }
 
   ngOnInit(): void {
-      this.pokemonsName$ = this.searchTerms.pipe(
+      this.pokemonsName$ = this.searchInPokemonsList.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
  

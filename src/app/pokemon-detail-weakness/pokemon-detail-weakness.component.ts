@@ -25,7 +25,7 @@ export class PokemonDetailWeaknessComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getPokemonsServerList();
+    this.getPokemonsServerList();                                                      //Get Pokemons full list update in real time
   }
 
   //Get the full list of pokemons

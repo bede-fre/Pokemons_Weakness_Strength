@@ -20,7 +20,7 @@ export class PokemonDetailComponent implements OnInit {
     private pokemonService: PokemonService,
     private location: Location
   ) {}
-
+  
   ngOnInit(): void {
     this.getPokemon();                                                    //Get Pokemon in full list update in real time
   }

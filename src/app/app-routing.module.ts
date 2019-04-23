@@ -5,7 +5,7 @@ import { PokemonsComponent} from './pokemons/pokemons.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PokemonDetailComponent } from './pokemon-detail/pokemon-detail.component';
 
-const routes: Routes = [
+const routes: Routes = [                                                   //create route to have more page in the application
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'pokemons', component: PokemonsComponent },

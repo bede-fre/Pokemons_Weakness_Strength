@@ -30,7 +30,7 @@ export class PokemonService {
   getPokemonsFullListFromServer(): Observable<Pokemon[]> {
     return this.http.get<Pokemon[]>(this.pokemonsUrl)
       .pipe(
-        tap(_ => this.log('fetched pokemons')),
+        tap(_ => this.logMessageDisplay('fetched pokemons')),
         catchError(this.handleError<Pokemon[]>('getPokemons', []))
     );
   }
@@ -43,7 +43,7 @@ export class PokemonService {
         map(pokemons => pokemons[0]), // returns a {0|1} element array
         tap(p => {
           const outcome = p ? `fetched` : `did not find`;
-          this.log(`${outcome} pokemon id=${pokemonId}`);
+          this.logMessageDisplay(`${outcome} pokemon id=${pokemonId}`);
         }),
         catchError(this.handleError<Pokemon>(`getPokemon id=${pokemonId}`))
       );
@@ -53,7 +53,7 @@ export class PokemonService {
   getPokemonByIdFromServer(pokemonId: number): Observable<Pokemon> {
     const url = `${this.pokemonsUrl}/${pokemonId}`;
     return this.http.get<Pokemon>(url).pipe(
-      tap(_ => this.log(`fetched pokemon id=${pokemonId}`)),
+      tap(_ => this.logMessageDisplay(`fetched pokemon id=${pokemonId}`)),
       catchError(this.handleError<Pokemon>(`getPokemon id=${pokemonId}`))
     );
   }
@@ -65,7 +65,7 @@ export class PokemonService {
       return of([]);
     }
    return this.http.get<Pokemon[]>(`${this.pokemonsUrl}/?name=${pokemonName}`).pipe(
-      tap(_ => this.log(`found pokemons matching "${pokemonName}"`)),
+      tap(_ => this.logMessageDisplay(`found pokemons matching "${pokemonName}"`)),
       catchError(this.handleError<Pokemon[]>('searchPokemons', []))
     );
   }
@@ -73,9 +73,9 @@ export class PokemonService {
   //////// Save methods //////////
 
   /** POST: add a new pokemon to the server */
-  addPokemonOnServer (pokemonToAdd: Pokemon): Observable<Pokemon> {
+  addPokemonOnserver (pokemonToAdd: Pokemon): Observable<Pokemon> {
     return this.http.post<Pokemon>(this.pokemonsUrl, pokemonToAdd, httpOptions).pipe(
-      tap((newPokemon: Pokemon) => this.log(`added pokemon w/ id=${newPokemon.id}`)),
+      tap((newPokemon: Pokemon) => this.logMessageDisplay(`added pokemon w/ id=${newPokemon.id}`)),
       catchError(this.handleError<Pokemon>('addPokemon'))
     );
   }
@@ -85,7 +85,7 @@ export class PokemonService {
     const id = typeof pokemonToDelete === 'number' ? pokemonToDelete : pokemonToDelete.id;
     const url = `${this.pokemonsUrl}/${id}`;
     return this.http.delete<Pokemon>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted pokemon id=${id}`)),
+      tap(_ => this.logMessageDisplay(`deleted pokemon id=${id}`)),
       catchError(this.handleError<Pokemon>('deletePokemon'))
     );
   }
@@ -93,7 +93,7 @@ export class PokemonService {
   /** PUT: update the pokemon on the server */
   updatePokemonNameOnServer (pokemonToUpdate: Pokemon): Observable<any> {
     return this.http.put(this.pokemonsUrl, pokemonToUpdate, httpOptions).pipe(
-      tap(_ => this.log(`updated pokemon id=${pokemonToUpdate.id}`)),
+      tap(_ => this.logMessageDisplay(`updated pokemon id=${pokemonToUpdate.id}`)),
       catchError(this.handleError<any>('updatePokemon'))
     );
   }
@@ -111,15 +111,15 @@ export class PokemonService {
       console.error(error); // log to console instead
  
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      this.logMessageDisplay(`${operation} failed: ${error.message}`);
  
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
-
+  
   /** Log a PokemonService message with the MessageService */
-  private log(message: string) {
-    this.messageService.add(`PokemonService: ${message}`);
+  private logMessageDisplay(messageToAdd: string) {
+    this.messageService.addMessage(`PokemonService: ${messageToAdd}`);
   }
 }
