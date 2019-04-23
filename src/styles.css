@@ -21,11 +21,6 @@ body, input[text], button {
   font-family: Cambria, Georgia;
 }
 
-a {
-  cursor: pointer;
-  cursor: hand;
-}
-
 button {
   font-family: Arial;
   background-color: #eee;
