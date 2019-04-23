@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-
 import { Pokemon } from './pokemon';
 
 @Injectable(
@@ -17,28 +14,28 @@ export class WeaknessStrengthService {
   constructor() { }
 
   //Get the list of selected pokemons
-  getSelectedPokemons(pokemon, idPage, isItWeak): Pokemon[] {
-    if (pokemon) {                                                        //if pokemon exist so you can continue the code else tou stop
-      this.pokemonIdandName = pokemon.trim();                             //get rid of whitespace
+  getSelectedPokemons(pokemonSelectedIdAndName, idPage, isItWeaknessOrStrengthList): Pokemon[] {
+    if (pokemonSelectedIdAndName) {                                                        //if pokemon exist so you can continue the code else tou stop
+      this.pokemonIdandName = pokemonSelectedIdAndName.trim();                             //get rid of whitespace
       let splitedPokemonIdandName = this.pokemonIdandName.split('.', 2);  //split the id and the name 
-      let pokemonLink = {                                                 //we place id an name inside a pokemon class
+      let pokemonSelected = {                                                 //we place id an name inside a pokemon class
         id: parseInt(splitedPokemonIdandName[0]),
         name: splitedPokemonIdandName[1]
       }
-      if (isItWeak == true)                                               //we do the code below only if it's the pokemon weakness list
-        return (this.returnWeaknessPokemonList(pokemonLink, idPage));
-      else if (isItWeak == false)                                         //we do the code below only if it's the pokemon strength list
-        return (this.returnStrengthPokemonList(pokemonLink, idPage));
+      if (isItWeaknessOrStrengthList == true)                                               //we do the code below only if it's the pokemon weakness list
+        return (this.returnWeaknessPokemonList(pokemonSelected, idPage));
+      else if (isItWeaknessOrStrengthList == false)                                         //we do the code below only if it's the pokemon strength list
+        return (this.returnStrengthPokemonList(pokemonSelected, idPage));
     }
     return ;
   }
 
   //return the pokemon Weaknesses List
-  returnWeaknessPokemonList(pokemon, idActualPage): Pokemon[] {
-    if (this.comparePokemonWeaknessList(pokemon.id) || pokemon.id == idActualPage || this.weaknessChoices(pokemon.id))
+  returnWeaknessPokemonList(pokemonSelected, idActualPage): Pokemon[] {
+    if (this.comparePokemonWeaknessList(pokemonSelected.id) || pokemonSelected.id == idActualPage || this.weaknessChoices(pokemonSelected.id))
       return (this.selectedPokemonsWeaknesses);                      //Block if you want to add the same pokemon Weakness or the pokemon
     else {                                                           //you are on its details page
-      this.selectedPokemonsWeaknesses.push(pokemon);                 //Add pokemon Weakness to its list
+      this.selectedPokemonsWeaknesses.push(pokemonSelected);                 //Add pokemon Weakness to its list
       this.selectedPokemonsWeaknesses.sort(function (x, y) {         //Sort pokemon weaknesses list by id
         return x.id - y.id;
       });
@@ -55,11 +52,11 @@ export class WeaknessStrengthService {
   }
 
   //return the pokemon Strengths List
-  returnStrengthPokemonList(pokemon, idActualPage): Pokemon[] {   
-    if (this.comparePokemonStrengthList(pokemon.id) || pokemon.id == idActualPage || this.strengthChoices(pokemon.id))    
+  returnStrengthPokemonList(pokemonSelected, idActualPage): Pokemon[] {   
+    if (this.comparePokemonStrengthList(pokemonSelected.id) || pokemonSelected.id == idActualPage || this.strengthChoices(pokemonSelected.id))    
       return (this.selectedPokemonsStrengths);                       //Block if you want to add the same pokemon Strength or the pokemon
     else {                                                           //you are on its details page
-      this.selectedPokemonsStrengths.push(pokemon);                  //Add pokemon Strength to its list
+      this.selectedPokemonsStrengths.push(pokemonSelected);                  //Add pokemon Strength to its list
       this.selectedPokemonsStrengths.sort(function (x, y) {          //Sort pokemon Strengths list by id
         return x.id - y.id;
       });
@@ -97,27 +94,27 @@ export class WeaknessStrengthService {
   }
 
   //Clear pokemon's list selected
-  clearListSelectedPokemons(isItWeak): Pokemon[] {
-    if (isItWeak == true)                                                        //Depending of the input, basically if you are
+  clearListSelectedPokemons(isItWeaknessOrStrengthList): Pokemon[] {
+    if (isItWeaknessOrStrengthList == true)                                                        //Depending of the input, basically if you are
       return (this.selectedPokemonsWeaknesses = []);                             //on pokemon strength or weakness list
     else                                                                         //you will clear the one or the other
       return (this.selectedPokemonsStrengths = []);
   }
 
   //Delete the pokemon selected
-  deleteSelectedPokemon(pokemon, isItWeak): Pokemon[] {
-    if (this.selectedPokemonsWeaknesses.length === 1 && isItWeak == true)
+  deleteSelectedPokemon(pokemon, isItWeaknessOrStrengthList): Pokemon[] {
+    if (this.selectedPokemonsWeaknesses.length === 1 && isItWeaknessOrStrengthList == true)
       return (this.selectedPokemonsWeaknesses = []);
-    else if (this.selectedPokemonsStrengths.length === 1 && isItWeak == false)
+    else if (this.selectedPokemonsStrengths.length === 1 && isItWeaknessOrStrengthList == false)
       return (this.selectedPokemonsStrengths = []);
     else {
-      if (isItWeak == true) {
-        let cptW = this.arrayPositionName(pokemon, isItWeak);
+      if (isItWeaknessOrStrengthList == true) {
+        let cptW = this.arrayPositionName(pokemon, isItWeaknessOrStrengthList);
         let deleteElementW = this.selectedPokemonsWeaknesses.splice(cptW, 1)
         return (this.selectedPokemonsWeaknesses);
       }
       else {
-        let cptS = this.arrayPositionName(pokemon, isItWeak);
+        let cptS = this.arrayPositionName(pokemon, isItWeaknessOrStrengthList);
         let deleteElementS = this.selectedPokemonsStrengths.splice(cptS, 1)
         return (this.selectedPokemonsStrengths);
       }
@@ -125,8 +122,8 @@ export class WeaknessStrengthService {
   }
 
   //Return pokemon's array position 
-  arrayPositionName(pokemon, isItWeak): number {
-    if (isItWeak == true) {
+  arrayPositionName(pokemon, isItWeaknessOrStrengthList): number {
+    if (isItWeaknessOrStrengthList == true) {
       for (let cpt = 0 ; cpt < this.selectedPokemonsWeaknesses.length ; cpt++)
         if (this.selectedPokemonsWeaknesses[cpt].id == pokemon.id)
           return (cpt);
